@@ -5,176 +5,94 @@
   <head>
     <meta charset="utf-8">
     <title></title>
-    <style media="screen">
-     @import url(https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300,700|Open+Sans:400,300,600);
-
-*{box-sizing:border-box;}
-
-body {
-  font-family: 'open sans', helvetica, arial, sans;
-background:url(http://farm8.staticflickr.com/7064/6858179818_5d652f531c_h.jpg) no-repeat center center fixed; 
-  -webkit-background-size: cover;
-  -moz-background-size: cover;
-  -o-background-size: cover;
-  background-size: cover;
-}
-
-@grey:#2a2a2a;
-@blue:#1fb5bf;
-.log-form {
-  width: 40%;
-  min-width: 700px;
-  max-width: 700px;
-  background: #fff;
-  position: absolute;
-  top: 60%;
-  left: 50%;
-  -webkit-transform: translate(-50%,-50%);
--moz-transform: translate(-50%,-50%);
--o-transform: translate(-50%,-50%);
--ms-transform: translate(-50%,-50%);
-transform: translate(-50%,-50%);
   
-  box-shadow: 0px 2px 5px rgba(0,0,0,.25);
-  
-  @media(max-width: 40em){
-    width: 95%;
-    position: relative;
-    margin: 2.5% auto 0 auto;
-    left: 0%;
-  -webkit-transform: translate(0%,0%);
--moz-transform: translate(0%,0%);
--o-transform: translate(0%,0%);
--ms-transform: translate(0%,0%);
-transform: translate(0%,0%);
-  }
-  
-  form {
-    display: block;
-    width: 100%;
-    padding: 2em;
-  }
-  
-  h2 {
-    width: 100%;
-    color: lighten(@grey, 20%);
-    font-family: 'open sans condensed';
-    font-size: 1.35em;
-    display: block;
-    background:@grey;
-    width: 100%;
-    text-transform: uppercase;
-    padding: .75em 1em .75em 1.5em;
-    box-shadow:inset 0px 1px 1px fadeout(white, 95%);
-    border: 1px solid darken(@grey, 5%);
-    //text-shadow: 0px 1px 1px darken(@grey, 5%);
-    margin: 0;
-    font-weight: 200;
-  }
-  
-  input {
-    display: block;
-    margin: auto auto;
-    width: 100%;
-    margin-bottom: 2em;
-    padding: .5em 0;
-    border: none;
-    border-bottom: 1px solid #eaeaea;
-    padding-bottom: 1.25em;
-    color: #757575;
-    &:focus {
-      outline: none;
-    }
-  }
-  
-  .btn {
-    display: inline-block;
-    background: blue;
-    border: 1px solid darken(@blue, 5%);
-    padding: .5em 2em;
-    color: white;
-    margin-right: .5em;
-    box-shadow: inset 0px 1px 0px fadeout(white, 80%); 
-    &:hover {
-      background: lighten(@blue, 5%);
-    }
-    &:active {
-      background: @blue; 
-      box-shadow: inset 0px 1px 1px fadeout(black, 90%); 
-    }
-    &:focus {
-      outline: none;
-    }
-  }
-  
- 
-  
-}
 
 
 
-
-    </style>
+    
   </head>
   <body>
     {% include "insurance/navbar.html" %}
-
-
-
-<div class="row log-form">
-  <h2 class="text-center pt-3 pb-2  ">Customer SignUp</h2><br>
-  <form method="post" enctype="multipart/form-data">
-   {% csrf_token %}
-   <div class="form-row">
-     <div class="form-group col-md-12">
-       <label for="username">Username</label>
-       {% render_field userForm.username|attr:'required:true'  class="form-control" placeholder="Username" %}
-       
-     </div>
-     
-     <div class="form-group col-md-12">
-       <label for="inputPassword4">Password</label>
-       {% render_field userForm.password|attr:'required:true'  class="form-control" placeholder="Password" %}
-     </div>
-   </div>
-
-   <div class="form-row">
-       <div class="form-group col-md-12">
-         <label for="first_name">First Name</label>
-         {% render_field userForm.first_name|attr:'required:true'  class="form-control" placeholder="First Name" autocomplete="off" %}
-       </div>
-       <div class="form-group col-md-12">
-         <label for="last_name">Last Name</label>
-         {% render_field userForm.last_name|attr:'required:true'  class="form-control" placeholder="Last Name" autocomplete="off" %}
-       </div>
-     </div>
-
-     <div class="form-row">
-       <div class="form-group col-md-12">
-         <label for="mobile">Contact</label>
-         {% render_field customerForm.mobile|attr:'required:true'  class="form-control" placeholder="Contact" autocomplete="off" %}
-       </div>
-       <div class="form-group col-md-12">
-         <label for="address">Address</label>
-         {% render_field customerForm.address|attr:'required:true'  class="form-control" placeholder="Address" autocomplete="off" %}
-       </div>
-     </div>
-
-     
-     <div class="form-row">
-      <div class="form-group col-md-12 pt-3 pb-3">
-        <button type="submit" class="btn btn-primary ">Sign Up</button>
-
-      </div>
-     </div>
-
-
-  </form>
-</div><!--end log form -->
-
+    <div class="row log-form">
+      <h2 class="text-center pt-3 pb-2">Customer SignUp</h2>
+      <br>
+      <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+    
+        <div class="form-row">
+          <div class="form-group col-md-12">
+            <label for="username">Username</label>
+            <input type="text" name="username" class="form-control" placeholder="Username" required pattern=".{3,}" title="Username must be at least 3 characters long.">
+            {% if userForm.errors.username %}
+              <div class="text-danger">
+                {{ userForm.errors.username }}
+              </div>
+            {% endif %}
+          </div>
+          <div class="form-group col-md-12">
+            <label for="inputPassword4">Password</label>
+            <input type="password" name="password" class="form-control" placeholder="Password" required pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" title="Password must be at least 8 characters long and contain at least one digit, one lowercase letter, and one uppercase letter.">
+            {% if userForm.errors.password %}
+              <div class="text-danger">
+                {{ userForm.errors.password }}
+              </div>
+            {% endif %}
+          </div>
+        </div>
+    
+        <div class="form-row">
+          <div class="form-group col-md-12">
+            <label for="first_name">First Name</label>
+            <input type="text" name="first_name" class="form-control" placeholder="First Name" required>
+            {% if userForm.errors.first_name %}
+              <div class="text-danger">
+                {{ userForm.errors.first_name }}
+              </div>
+            {% endif %}
+          </div>
+          <div class="form-group col-md-12">
+            <label for="last_name">Last Name</label>
+            <input type="text" name="last_name" class="form-control" placeholder="Last Name" required>
+            {% if userForm.errors.last_name %}
+              <div class="text-danger">
+                {{ userForm.errors.last_name }}
+              </div>
+            {% endif %}
+          </div>
+        </div>
+    
+        <div class="form-row">
+          <div class="form-group col-md-12">
+            <label for="mobile">Contact</label>
+            <input type="tel" name="mobile" class="form-control" placeholder="Contact" required pattern="[0-9]{10}" title="Please enter a 10-digit mobile number.">
+            {% if customerForm.errors.mobile %}
+              <div class="text-danger">
+                {{ customerForm.errors.mobile }}
+              </div>
+            {% endif %}
+          </div>
+          <div class="form-group col-md-12">
+            <label for="address">Address</label>
+            <input type="text" name="address" class="form-control" placeholder="Address" required>
+            {% if customerForm.errors.address %}
+              <div class="text-danger">
+                {{ customerForm.errors.address }}
+              </div>
+            {% endif %}
+          </div>
+        </div>
+    
+    
+        <div class="form-row">
+          <div class="form-group col-md-12 pt-3 pb-3">
+            <button type="submit" class="btn btn-primary">Sign Up</button>
+          </div>
+        </div>
+    
+        
+    
+    
 
 <!-- {% include "insurance/footer.html" %} -->
   </body>
 </html>
-
-
